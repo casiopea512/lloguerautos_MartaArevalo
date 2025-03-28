@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat d'Automòbils</title>
+</head>
+<body>
+    <h1>Llistat d'Automòbils</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Marca</th>
+                <th>Model</th>
+                <th>Matrícula</th>
+                <th>Reserves</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auto in automobils %}
+                <tr>
+                    <td>{{ auto.marca }}</td>
+                    <td>{{ auto.model }}</td>
+                    <td>{{ auto.matricula }}</td>
+                    <td>
+                        {% if auto.reserva_set.all %}
+                            <ul>
+                                {% for reserva in auto.reserva_set.all %}
+                                    <li>Usuari: {{ reserva.usuario.username }}, del {{ reserva.data_inici }} al {{ reserva.data_fi }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Sense reserves
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No hi ha automòbils disponibles.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
